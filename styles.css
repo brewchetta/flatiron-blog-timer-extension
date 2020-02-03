@@ -1,3 +1,7 @@
+body {
+  min-width: 300px;
+}
+
 h3 {
   text-align: center;
   color: white;
@@ -5,7 +9,7 @@ h3 {
 }
 
 input[type=number] {
-  width: 2em;
+  width: 3em;
   text-align: right;
 }
 
