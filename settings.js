@@ -14,17 +14,16 @@ const parseTimePeriod = timeInSeconds => {
 }
 
 const loadInitialValues = () => {
-  chrome.storage.local.get()
-  .then((obj) => {
-    console.log('loadInitialValues',obj)
-    if (obj.timePeriod) {
-      const [minutes, seconds] = parseTimePeriod(obj.timePeriod)
-      timePeriodMinutes.value = minutes
-      timePeriodSeconds.value = seconds
-    }
-    if (obj.gracePeriod) gracePeriodForm.value = obj.gracePeriod
-    if (obj.timerActive && obj.timerActive === 'on') timerActiveInput.checked = true
-  })
+  chrome.storage.local.get(null, (obj) => {
+      console.log('loadInitialValues',obj)
+      if (obj.timePeriod) {
+        const [minutes, seconds] = parseTimePeriod(obj.timePeriod)
+        timePeriodMinutes.value = minutes
+        timePeriodSeconds.value = seconds
+      }
+      if (obj.gracePeriod) gracePeriodForm.value = obj.gracePeriod
+      if (obj.timerActive && obj.timerActive === 'on') timerActiveInput.checked = true
+    })
 }
 
 const handleSubmit = () => {

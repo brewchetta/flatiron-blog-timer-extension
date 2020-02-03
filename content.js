@@ -48,7 +48,7 @@ const clearPage = () => {
 // Fires each second while timer is positive
 const timerTicksDown = () => {
   timer -= 1
-  timerBar.style.width = `${(timer / studentTime) * 120}%`
+  timerBar.style.width = `${(timer / studentTime) * 105}%`
   warningClock.innerText = `You are ${Math.floor((timer * -1)/60)}:${(timer * -1) % 60 >= 10 ? '' : '0'}${(timer * -1) % 60} over`
   if (timer < 0) {
     warningClock.style.opacity = '1'
@@ -95,10 +95,6 @@ const handleVisibilityChange = () => {
   }
 }
 
-const handleError = (msg) => {
-  console.log(msg)
-}
-
 const getSync = (obj) => {
   // Check to see if timer is on before committing
   if (obj.timerActive === 'on') {
@@ -115,8 +111,7 @@ const getSync = (obj) => {
 
 const handleDOMContentLoaded = () => {
   // Events to fire once everything is declared
-  chrome.storage.local.get()
-  .then(getSync, handleError)
+  chrome.storage.local.get(null, getSync)
 }
 
 // Fire off main script
