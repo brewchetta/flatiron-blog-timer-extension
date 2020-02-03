@@ -1,0 +1,31 @@
+{
+
+  "manifest_version": 2,
+  "name": "Flatiron Blog Timer",
+  "version": "1.0",
+
+  "description": "A timer for Flatiron staff to time blogs.",
+
+  "icons": {
+    "48": "icons/flatiron-48.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icons/flatiron-32.png",
+    "default_title": "Flatiron Blog Timer",
+    "default_popup": "settings.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://medium.com/*"],
+      "js": ["content.js"]
+    }
+
+  ],
+
+  "permissions": [
+    "storage"
+  ]
+
+}
