@@ -1,3 +1,7 @@
+body {
+  min-width: 300px;
+}
+
 h3 {
   text-align: center;
   color: white;

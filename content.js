@@ -95,10 +95,6 @@ const handleVisibilityChange = () => {
   }
 }
 
-const handleError = (msg) => {
-  console.log(msg)
-}
-
 const getSync = (obj) => {
   // Check to see if timer is on before committing
   if (obj.timerActive === 'on') {
@@ -115,8 +111,7 @@ const getSync = (obj) => {
 
 const handleDOMContentLoaded = () => {
   // Events to fire once everything is declared
-  browser.storage.local.get()
-  .then(getSync, handleError)
+  chrome.storage.local.get(null, getSync)
 }
 
 // Fire off main script
