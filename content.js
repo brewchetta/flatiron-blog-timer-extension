@@ -75,15 +75,14 @@ const timerTick = () => {
 const handleFocus = () => {
   if (!studentHasStarted) {
     timer = studentTime
+    clock = setInterval(timerTick, 1000)
+    studentHasStarted = true
   }
-  clock = setInterval(timerTick, 1000)
-  studentHasStarted = true
 }
 
 // Stops the timer, fires when window is out of focus
 const handleUnfocus = () => {
-  // clearInterval(clock)
-  // if (timer > 0) warningClock.style.opacity = '0'
+  // Should something go here?
 }
 
 // Handles changes depending on whether document is in focus or not
