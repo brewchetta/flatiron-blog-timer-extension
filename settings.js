@@ -14,7 +14,7 @@ const parseTimePeriod = timeInSeconds => {
 }
 
 const loadInitialValues = () => {
-  browser.storage.local.get()
+  chrome.storage.local.get()
   .then((obj) => {
     console.log('loadInitialValues',obj)
     if (obj.timePeriod) {
@@ -29,7 +29,7 @@ const loadInitialValues = () => {
 
 const handleSubmit = () => {
   const timeInSeconds = (timePeriodMinutes.value * 6) + timePeriodSeconds.value
-  browser.storage.local.set({
+  chrome.storage.local.set({
     timePeriod: timeInSeconds,
     gracePeriod: gracePeriodForm.value
   })
@@ -37,10 +37,10 @@ const handleSubmit = () => {
 
 const handleToggleActive = () => {
   if (timerActiveInput.checked) {
-    browser.storage.local.set({
+    chrome.storage.local.set({
       timerActive: 'on'
     })} else {
-      browser.storage.local.set({
+      chrome.storage.local.set({
         timerActive: 'off'
     })
   }

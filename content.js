@@ -115,7 +115,7 @@ const getSync = (obj) => {
 
 const handleDOMContentLoaded = () => {
   // Events to fire once everything is declared
-  browser.storage.local.get()
+  chrome.storage.local.get()
   .then(getSync, handleError)
 }
 
