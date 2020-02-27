@@ -11,7 +11,7 @@
   },
 
   "browser_action": {
-    "default_icon": "icons/flatiron-32.png",
+    "default_icon": "icons/flatiron-32x32.png",
     "default_title": "Flatiron Blog Timer",
     "default_popup": "settings.html"
   },

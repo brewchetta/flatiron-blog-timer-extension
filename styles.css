@@ -1,3 +1,7 @@
+:root {
+  --flatironcolor: #13B4E7;
+}
+
 body {
   min-width: 300px;
 }
@@ -5,16 +9,12 @@ body {
 h3 {
   text-align: center;
   color: white;
-  background: lightblue;
+  background: var(--flatironcolor);
 }
 
-input[type=number] {
-  width: 2em;
+input[type=text] {
+  width: 4em;
   text-align: right;
-}
-
-input[type=number]:focus {
-  background-color: lightblue;
 }
 
 /* The switch - the box around the slider */
@@ -58,11 +58,11 @@ input[type=number]:focus {
 }
 
 input:checked + .slider {
- background-color: #2196F3;
+ background-color: var(--flatironcolor);
 }
 
 input:focus + .slider {
- box-shadow: 0 0 1px #2196F3;
+ box-shadow: 0 0 1px var(--flatironcolor);
 }
 
 input:checked + .slider:before {
@@ -82,6 +82,4 @@ input:checked + .slider:before {
 
 #timer-active-container {
   text-align: right;
-  /* display: grid;
-  grid-template-columns: 1fr 1fr; */
 }

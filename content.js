@@ -18,7 +18,7 @@ const declareStyles = (styleObj, element) => {
 // Declare and style timerBar and warningClock
 const timerBar = document.createElement('div')
 const timerStyle = {
-  width: "100%", height: "10px", position: "fixed", background: "blue", left: "0", top: "0", zIndex: "1000", transition: "width 1s linear"
+  width: "100%", height: "5px", position: "fixed", background: "blue", left: "0", top: "0", zIndex: "1000", transition: "width 1s linear"
 }
 declareStyles(timerStyle, timerBar)
 
