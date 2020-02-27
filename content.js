@@ -38,7 +38,7 @@ warningClock.style.border = 'solid red 2px'
 warningClock.style.borderRadius = '5px'
 warningClock.style.transition = 'opacity 2s'
 
-// Replace all text with Time up!
+// Replace all text and images (currently not in use)
 const clearPage = () => {
   Array.from(document.querySelectorAll('p')).forEach(p => p.innerText = '')
   Array.from(document.querySelectorAll('figcaption')).forEach(figcaption => figcaption.innerText = '')
@@ -59,16 +59,12 @@ const timerTicksDown = () => {
 const timerFinish = () => {
   clearInterval(clock)
   warningClock.innerText = 'Time up!'
-  clearPage()
+  // clearPage()
 }
 
 // Ticks on timer interval
 const timerTick = () => {
-  if (timer > gracePeriod * -1) {
-    timerTicksDown()
-  } else {
-    timerFinish()
-  }
+  timer > gracePeriod * -1 ? timerTicksDown() : timerFinish()
 }
 
 // Begins / resets the timer
@@ -80,18 +76,14 @@ const handleFocus = () => {
   }
 }
 
-// Stops the timer, fires when window is out of focus
+// Fires when window is out of focus
 const handleUnfocus = () => {
-  // Should something go here?
+  // Leaving in for posterity
 }
 
-// Handles changes depending on whether document is in focus or not
+// Handles visibility changes (switching to or away from the tab)
 const handleVisibilityChange = () => {
-  if (!document.hidden) {
-    handleFocus()
-  } else {
-    handleUnfocus()
-  }
+  !document.hidden ? handleFocus() : handleUnfocus()
 }
 
 const getSync = (obj) => {
