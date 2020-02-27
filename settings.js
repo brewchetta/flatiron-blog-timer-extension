@@ -1,3 +1,4 @@
+// Gather elements
 const inputForm = document.getElementById('input-form')
 const timePeriodMinutes = document.getElementById('time-period-minutes')
 const timePeriodSeconds = document.getElementById('time-period-seconds')
@@ -6,17 +7,17 @@ const timerActiveInput = document.getElementById('timer-active-input')
 
 console.log('timer is:',timerActiveInput.checked)
 
+// Parse time in seconds into minutes and seconds
 const parseTimePeriod = timeInSeconds => {
-  console.log(timeInSeconds)
   const minutes = Math.floor(timeInSeconds / 60)
   const seconds = timeInSeconds % 60
   return [minutes, seconds]
 }
 
+// Gather local values from browser storage to display
 const loadInitialValues = () => {
   browser.storage.local.get()
   .then((obj) => {
-    console.log('loadInitialValues',obj)
     if (obj.timePeriod) {
       const [minutes, seconds] = parseTimePeriod(obj.timePeriod)
       timePeriodMinutes.value = minutes

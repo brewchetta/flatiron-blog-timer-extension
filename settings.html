@@ -14,12 +14,12 @@
     <form id='input-form'>
 
       <label>Time to present:</label>
-      <input type='number' min='0' id='time-period-minutes' placeholder='Minutes' />
+      <input type='text' id='time-period-minutes' pattern='[0-9]{0,2}' placeholder='Minutes' />
       <span>:</span>
-      <input type='number' min='0' id='time-period-seconds' placeholder='Seconds' />
+      <input type='text' id='time-period-seconds' pattern='[0-9]{0,2}' placeholder='Seconds' />
       <br/>
       <label>Grace Period:</label>
-      <input type='number' min='0' id='grace-period' placeholder='Grace period' />
+      <input type='text' id='grace-period' pattern='[0-9]{0,2}' placeholder='Grace period' />
       <span> seconds</span>
       <br/>
       <input type='submit' value='Save' />

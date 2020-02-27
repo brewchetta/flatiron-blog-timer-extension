@@ -10,33 +10,23 @@ let studentHasStarted = false
 let timer = studentTime
 let clock
 
+// To declare styles on elements below
+const declareStyles = (styleObj, element) => {
+  Object.keys(styleObj).forEach(k => element.style[k] = styleObj[k])
+}
+
 // Declare and style timerBar and warningClock
 const timerBar = document.createElement('div')
-timerBar.style.width = "100%"
-timerBar.style.height = "10px"
-timerBar.style.position = "fixed"
-timerBar.style.background = "blue"
-timerBar.style.left = '0'
-timerBar.style.top = '0'
-timerBar.style.zIndex = '1000'
-timerBar.style.transition = 'width 1s linear'
+const timerStyle = {
+  width: "100%", height: "10px", position: "fixed", background: "blue", left: "0", top: "0", zIndex: "1000", transition: "width 1s linear"
+}
+declareStyles(timerStyle, timerBar)
 
 const warningClock = document.createElement('span')
-warningClock.style.opacity = '0'
-warningClock.style.position = "fixed"
-warningClock.style.background = "white"
-warningClock.style.right = '0'
-warningClock.style.top = '0'
-warningClock.style.zIndex = '1000'
-warningClock.style.transition = 'opacity 1s'
-warningClock.style.padding = '0.5em'
-warningClock.style.color = 'red'
-warningClock.style.fontSize = '1em'
-warningClock.style.margin = '1em'
-warningClock.style.fontWeight = 'bold'
-warningClock.style.border = 'solid red 2px'
-warningClock.style.borderRadius = '5px'
-warningClock.style.transition = 'opacity 2s'
+warningStyle = {
+  opacity: "0", position: "fixed", background: "white", right: "0", top: "0", zIndex: "1000", transition: "opacity 1s", padding: "0.5em", color: "red", fontSize: "1em", fontWeight: "bold", border: "solid red 2px", borderRadius: "5px", transition: "opacity 2s"
+}
+declareStyles(warningStyle, warningClock)
 
 // Replace all text and images (currently not in use)
 const clearPage = () => {
@@ -69,6 +59,7 @@ const timerTick = () => {
 
 // Begins / resets the timer
 const handleFocus = () => {
+  console.log('Focused')
   if (!studentHasStarted) {
     timer = studentTime
     clock = setInterval(timerTick, 1000)
@@ -87,22 +78,28 @@ const handleVisibilityChange = () => {
 }
 
 const getSync = (obj) => {
+  console.log("Getting sync", obj)
   // Check to see if timer is on before committing
   if (obj.timerActive === 'on') {
-    // Set variables to new values
+    // Set variables
     if (obj.timePeriod) studentTime = obj.timePeriod
     if (obj.gracePeriod) gracePeriod = obj.gracePeriod
-    // Add various elements
+    // Append elements
+    console.log(timerBar)
     document.body.appendChild(timerBar)
     document.body.appendChild(warningClock)
-    // Add event on refocus
+    // Add visibility change event
     document.addEventListener("visibilitychange", handleVisibilityChange)
   }
 }
 
+const handleError = error => console.log(error)
+
 const handleDOMContentLoaded = () => {
+  console.log("Dom Content Loaded")
   // Events to fire once everything is declared
-  chrome.storage.local.get(null, getSync)
+  browser.storage.local.get()
+  .then(getSync, handleError)
 }
 
 // Fire off main script
