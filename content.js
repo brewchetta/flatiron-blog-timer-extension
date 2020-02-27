@@ -10,40 +10,23 @@ let studentHasStarted = false
 let timer = studentTime
 let clock
 
+// To declare styles on elements below
+const declareStyles = (styleObj, element) => {
+  Object.keys(styleObj).forEach(k => element.style[k] = styleObj[k])
+}
+
 // Declare and style timerBar and warningClock
 const timerBar = document.createElement('div')
-timerBar.style.width = "100%"
-timerBar.style.height = "10px"
-timerBar.style.position = "fixed"
-timerBar.style.background = "blue"
-timerBar.style.left = '0'
-timerBar.style.top = '0'
-timerBar.style.zIndex = '1000'
-timerBar.style.transition = 'width 1s linear'
+const timerStyle = {
+  width: "100%", height: "4px", position: "fixed", background: "#13B4E7", left: "0", top: "0", zIndex: "1000", transition: "width 1s linear"
+}
+declareStyles(timerStyle, timerBar)
 
 const warningClock = document.createElement('span')
-warningClock.style.opacity = '0'
-warningClock.style.position = "fixed"
-warningClock.style.background = "white"
-warningClock.style.right = '0'
-warningClock.style.top = '0'
-warningClock.style.zIndex = '1000'
-warningClock.style.transition = 'opacity 1s'
-warningClock.style.padding = '0.5em'
-warningClock.style.color = 'red'
-warningClock.style.fontSize = '1em'
-warningClock.style.margin = '1em'
-warningClock.style.fontWeight = 'bold'
-warningClock.style.border = 'solid red 2px'
-warningClock.style.borderRadius = '5px'
-warningClock.style.transition = 'opacity 2s'
-
-// Replace all text with Time up!
-const clearPage = () => {
-  Array.from(document.querySelectorAll('p')).forEach(p => p.innerText = '')
-  Array.from(document.querySelectorAll('figcaption')).forEach(figcaption => figcaption.innerText = '')
-  Array.from(document.querySelectorAll('img')).forEach(img => img.parentNode.removeChild(img))
+warningStyle = {
+  opacity: "0", position: "fixed", background: "white", right: "0", top: "0", zIndex: "1000", transition: "opacity 1s", padding: "0.5em", color: "red", fontSize: "1em", fontWeight: "bold", border: "solid red 2px", borderRadius: "5px", transition: "opacity 2s"
 }
+declareStyles(warningStyle, warningClock)
 
 // Fires each second while timer is positive
 const timerTicksDown = () => {
@@ -59,57 +42,53 @@ const timerTicksDown = () => {
 const timerFinish = () => {
   clearInterval(clock)
   warningClock.innerText = 'Time up!'
-  clearPage()
 }
 
 // Ticks on timer interval
 const timerTick = () => {
-  if (timer > gracePeriod * -1) {
-    timerTicksDown()
-  } else {
-    timerFinish()
-  }
+  timer > gracePeriod * -1 ? timerTicksDown() : timerFinish()
 }
 
 // Begins / resets the timer
 const handleFocus = () => {
+  console.log('Focused')
   if (!studentHasStarted) {
     timer = studentTime
+    clock = setInterval(timerTick, 1000)
+    studentHasStarted = true
   }
-  clock = setInterval(timerTick, 1000)
-  studentHasStarted = true
 }
 
-// Stops the timer, fires when window is out of focus
+// Fires when window is out of focus
 const handleUnfocus = () => {
-  // clearInterval(clock)
-  // if (timer > 0) warningClock.style.opacity = '0'
+  // Leaving in for posterity
 }
 
-// Handles changes depending on whether document is in focus or not
+// Handles visibility changes (switching to or away from the tab)
 const handleVisibilityChange = () => {
-  if (!document.hidden) {
-    handleFocus()
-  } else {
-    handleUnfocus()
-  }
+  !document.hidden ? handleFocus() : handleUnfocus()
 }
 
 const getSync = (obj) => {
+  console.log("Getting sync", obj)
   // Check to see if timer is on before committing
   if (obj.timerActive === 'on') {
-    // Set variables to new values
+    // Set variables
     if (obj.timePeriod) studentTime = obj.timePeriod
     if (obj.gracePeriod) gracePeriod = obj.gracePeriod
-    // Add various elements
+    // Append elements
+    console.log(timerBar)
     document.body.appendChild(timerBar)
     document.body.appendChild(warningClock)
-    // Add event on refocus
+    // Add visibility change event
     document.addEventListener("visibilitychange", handleVisibilityChange)
   }
 }
 
+const handleError = error => console.log(error)
+
 const handleDOMContentLoaded = () => {
+  console.log("Dom Content Loaded")
   // Events to fire once everything is declared
   chrome.storage.local.get(null, getSync)
 }
