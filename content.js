@@ -18,7 +18,7 @@ const declareStyles = (styleObj, element) => {
 // Declare and style timerBar and warningClock
 const timerBar = document.createElement('div')
 const timerStyle = {
-  width: "100%", height: "5px", position: "fixed", background: "blue", left: "0", top: "0", zIndex: "1000", transition: "width 1s linear"
+  width: "100%", height: "4px", position: "fixed", background: "#13B4E7", left: "0", top: "0", zIndex: "1000", transition: "width 1s linear"
 }
 declareStyles(timerStyle, timerBar)
 
@@ -27,13 +27,6 @@ warningStyle = {
   opacity: "0", position: "fixed", background: "white", right: "0", top: "0", zIndex: "1000", transition: "opacity 1s", padding: "0.5em", color: "red", fontSize: "1em", fontWeight: "bold", border: "solid red 2px", borderRadius: "5px", transition: "opacity 2s"
 }
 declareStyles(warningStyle, warningClock)
-
-// Replace all text and images (currently not in use)
-const clearPage = () => {
-  Array.from(document.querySelectorAll('p')).forEach(p => p.innerText = '')
-  Array.from(document.querySelectorAll('figcaption')).forEach(figcaption => figcaption.innerText = '')
-  Array.from(document.querySelectorAll('img')).forEach(img => img.parentNode.removeChild(img))
-}
 
 // Fires each second while timer is positive
 const timerTicksDown = () => {
@@ -49,7 +42,6 @@ const timerTicksDown = () => {
 const timerFinish = () => {
   clearInterval(clock)
   warningClock.innerText = 'Time up!'
-  // clearPage()
 }
 
 // Ticks on timer interval
