@@ -29,10 +29,10 @@ const loadInitialValues = () => {
 }
 
 const handleSubmit = () => {
-  const timeInSeconds = (timePeriodMinutes.value * 6) + timePeriodSeconds.value
+  const timeInSeconds = (parseInt(timePeriodMinutes.value) * 60) + parseInt(timePeriodSeconds.value)
   chrome.storage.local.set({
     timePeriod: timeInSeconds,
-    gracePeriod: gracePeriodForm.value
+    gracePeriod: parseInt(gracePeriodForm.value)
   })
 }
 
