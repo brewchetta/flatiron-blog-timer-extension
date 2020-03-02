@@ -29,7 +29,6 @@ const loadInitialValues = () => {
 }
 
 const handleSubmit = () => {
-  console.log("timePeriodMinutes", typeof timePeriodMinutes.value)
   const timeInSeconds = (parseInt(timePeriodMinutes.value) * 60) + parseInt(timePeriodSeconds.value)
   browser.storage.local.set({
     timePeriod: timeInSeconds,
