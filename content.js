@@ -6,6 +6,15 @@ let gracePeriod = 90
 // Sets to true once the user switches to the blog's tab from somewhere else
 let studentHasStarted = false
 
+// Error handling for syncing
+const handleError = error => console.log(error)
+
+// Getting local storage
+const handleSync = callback => {
+  browser.storage.local.get()
+  .then(callback, handleError)
+}
+
 // Create variables for timer and clock
 let timer = studentTime
 let clock
@@ -49,14 +58,17 @@ const timerTick = () => {
   timer > gracePeriod * -1 ? timerTicksDown() : timerFinish()
 }
 
-// Begins / resets the timer
+// Begins the timer
 const handleFocus = () => {
-  console.log('Focused')
-  if (!studentHasStarted) {
-    timer = studentTime
-    clock = setInterval(timerTick, 1000)
-    studentHasStarted = true
-  }
+  handleSync(obj => {
+    if (!studentHasStarted && obj.timerActive === 'on') {
+      if (obj.timePeriod) studentTime = obj.timePeriod
+      if (obj.gracePeriod) gracePeriod = obj.gracePeriod
+      timer = studentTime
+      clock = setInterval(timerTick, 1000)
+      studentHasStarted = true
+    }
+  })
 }
 
 // Fires when window is out of focus
@@ -69,29 +81,12 @@ const handleVisibilityChange = () => {
   !document.hidden ? handleFocus() : handleUnfocus()
 }
 
-const getSync = (obj) => {
-  console.log("Getting sync", obj)
-  // Check to see if timer is on before committing
-  if (obj.timerActive === 'on') {
-    // Set variables
-    if (obj.timePeriod) studentTime = obj.timePeriod
-    if (obj.gracePeriod) gracePeriod = obj.gracePeriod
-    // Append elements
-    console.log(timerBar)
-    document.body.appendChild(timerBar)
-    document.body.appendChild(warningClock)
-    // Add visibility change event
-    document.addEventListener("visibilitychange", handleVisibilityChange)
-  }
-}
-
-const handleError = error => console.log(error)
-
 const handleDOMContentLoaded = () => {
-  console.log("Dom Content Loaded")
-  // Events to fire once everything is declared
-  browser.storage.local.get()
-  .then(getSync, handleError)
+  // Append elements
+  document.body.appendChild(timerBar)
+  document.body.appendChild(warningClock)
+  // Add visibility change event
+  document.addEventListener("visibilitychange", handleVisibilityChange)
 }
 
 // Fire off main script
