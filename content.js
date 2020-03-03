@@ -36,7 +36,7 @@ declareStyles(timerStyle, timerBar)
 
 const warningClock = document.createElement('span')
 warningStyle = {
-  opacity: "0", position: "fixed", background: "white", right: "1em", top: "1em", zIndex: "1000", transition: "opacity 1s", padding: "0.5em", color: "red", fontSize: "1em", fontWeight: "bold", border: "solid red 2px", borderRadius: "5px", transition: "opacity 2s, font-size 2s, border-width 2s"
+  opacity: "0", position: "fixed", background: "white", right: "1em", top: "1em", zIndex: "1000", transition: "opacity 1s", padding: "0.5em", color: "red", fontSize: "1em", fontWeight: "bold", border: "solid red 2px", borderRadius: "5px", transition: "opacity 2s, font-size 2s, border-width 2s, right 2s, top 2s"
 }
 declareStyles(warningStyle, warningClock)
 
