@@ -12,13 +12,20 @@ const handleGetSync = callback => {
 
 // Set sync function
 const handleSetSync = object => {
-  if (browser && browser.storage) {
+  try {
     browser.storage.local.set(object)
-  } else if (chrome && chrome.storage) {
-    chrome.storage.local.set(object)
-  } else {
-    console.error('This browser is not supported by blog timer.')
   }
+  catch(error){ void(0) }
+  try {
+    chrome.storage.local.set(object)
+  }
+  catch(error){ void(0) }
+  // if (browser && browser.storage) {
+  // } else if (chrome && chrome.storage) {
+  //   chrome.storage.local.set(object)
+  // } else {
+  //   console.error('This browser is not supported by blog timer.')
+  // }
 }
 
 // Gather elements
