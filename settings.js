@@ -4,11 +4,11 @@ const handleGetSync = callback => {
     browser.storage.local.get()
     .then(callback, console.error)
   }
-  catch (e) {console.warning(e)}
+  catch (e) {console.warn(e)}
   try {
     chrome.storage.local.get(null, callback)
   }
-  catch (e) {console.warning(e)}
+  catch (e) {console.warn(e)}
 }
 
 // Set sync function
@@ -16,12 +16,12 @@ const handleSetSync = object => {
   try {
     browser.storage.local.set(object)
   }
-  catch(e){console.warning(e)}
+  catch(e){console.warn(e)}
 
   try {
     chrome.storage.local.set(object)
   }
-  catch(e){console.warning(e)}
+  catch(e){console.warn(e)}
 }
 
 // Gather elements
