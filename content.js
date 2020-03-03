@@ -1,3 +1,14 @@
+// Get sync function
+function handleGetSync(callback) {
+  if (browser && browser.storage) {
+    browser.storage.local.get()
+    .then(callback, console.error)
+  } else if (chrome && chrome.storage) {
+    chrome.storage.local.get(null, callback)
+  } else {
+    console.error("This version of Blog Timer is incompatible with your browser")
+  }
+}
 
 // Time until student is finished
 let studentTime = 300
@@ -5,21 +16,6 @@ let studentTime = 300
 let gracePeriod = 90
 // Sets to true once the user switches to the blog's tab from somewhere else
 let studentHasStarted = false
-
-// Error handling for syncing
-const handleError = error => console.log(error)
-
-// Getting local storage
-const handleSync = callback => {
-  if (browser && browser.storage) {
-    browser.storage.local.get()
-    .then(callback, handleError)
-  } else if (chrome && chrome.storage) {
-    chrome.storage.local.get(null, getSync)
-  } else {
-    console.error("This version of Blog Timer is incompatible with your browser")
-  }
-}
 
 // Create variables for timer and clock
 let timer = studentTime
@@ -66,7 +62,7 @@ const timerTick = () => {
 
 // Begins the timer
 const handleFocus = () => {
-  handleSync(obj => {
+  handleGetSync(obj => {
     if (!studentHasStarted && obj.timerActive === 'on') {
       if (obj.timePeriod) studentTime = obj.timePeriod
       if (obj.gracePeriod) gracePeriod = obj.gracePeriod
