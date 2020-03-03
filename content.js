@@ -1,13 +1,14 @@
 // Get sync function
-function handleGetSync(callback) {
-  if (browser && browser.storage) {
+const handleGetSync = callback => {
+  try {
     browser.storage.local.get()
     .then(callback, console.error)
-  } else if (chrome && chrome.storage) {
-    chrome.storage.local.get(null, callback)
-  } else {
-    console.error("This version of Blog Timer is incompatible with your browser")
   }
+  catch (e) {console.warn(e)}
+  try {
+    chrome.storage.local.get(null, callback)
+  }
+  catch (e) {console.warn(e)}
 }
 
 // Time until student is finished
