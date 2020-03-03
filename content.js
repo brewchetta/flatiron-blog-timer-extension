@@ -11,8 +11,14 @@ const handleError = error => console.log(error)
 
 // Getting local storage
 const handleSync = callback => {
-  browser.storage.local.get()
-  .then(callback, handleError)
+  if (browser && browser.storage) {
+    browser.storage.local.get()
+    .then(callback, handleError)
+  } else if (chrome && chrome.storage) {
+    chrome.storage.local.get(null, getSync)
+  } else {
+    console.error("This version of Blog Timer is incompatible with your browser")
+  }
 }
 
 // Create variables for timer and clock
