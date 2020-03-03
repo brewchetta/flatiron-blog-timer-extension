@@ -7,7 +7,7 @@
   "description": "A timer for Flatiron staff to time blogs.",
 
   "icons": {
-    "48": "icons/flatiron-48.png"
+    "48": "icons/learn-32x32.png"
   },
 
   "browser_action": {
